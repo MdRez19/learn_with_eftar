@@ -21,91 +21,43 @@ clearButton.addEventListener("click", clearBtnPressed);
 //**********
 
 // put your variables here
-let firstValue = null;
-let secondValue = null;
-let numberValue = '';
-let operatorValue = '';
-let primaryOperator = '';
-let secondaryOperator = '';
+let firstNumberValue = null;
+let secondNumberValue = null;
+let currentNumberValue = '';
+let currentOperatorValue = '';
+let previousOperatorValue = '';
 
 // functions...
 function calculation() {
-    if (primaryOperator === '+'){
-        if (secondValue !== null){
-            displayTwo.innerText = ''
-            firstValue = firstValue + secondValue
-            displayOne.innerText = firstValue
-            secondaryOperator = numberValue
+    if (previousOperatorValue === '+'){
+        if (secondNumberValue !== null){
+            firstNumberValue = firstNumberValue + secondNumberValue
         }
-    } else if (primaryOperator === '-'){
-        if (secondValue !== null) {
-            displayTwo.innerText = ''
-            firstValue = firstValue - secondValue
-            displayOne.innerText = firstValue
-            secondaryOperator = numberValue
+    } else if (previousOperatorValue === '-'){
+        if (secondNumberValue !== null) {
+            firstNumberValue = firstNumberValue - secondNumberValue
         }
-    } else if (primaryOperator === '×'){
-        if (secondValue !== null) {
-            displayTwo.innerText = ''
-            firstValue = firstValue * secondValue
-            displayOne.innerText = firstValue
-            secondaryOperator = numberValue
+    } else if (previousOperatorValue === '×'){
+        if (secondNumberValue !== null) {
+            firstNumberValue = firstNumberValue * secondNumberValue
         }
-    } else if (primaryOperator === '/'){
-        if (secondValue !== null) {
-            displayTwo.innerText = ''
-            firstValue = firstValue / secondValue
-            displayOne.innerText = firstValue
-            secondaryOperator = numberValue
+    } else if (previousOperatorValue === '/'){
+        if (secondNumberValue !== null) {
+            firstNumberValue = firstNumberValue / secondNumberValue
         }
     }
+    displayTwo.innerText = ''
+    displayOne.innerText = firstNumberValue
 }
 
 function calculatorInterfaceOne() {
-    if (operatorValue === '+' || operatorValue === '-' || operatorValue === '×' || operatorValue === '/'){
-        calculation()
-        calculatorInterfaceTwo()
-        primaryOperator = operatorValue
-        if (secondValue === null){
-            secondaryOperator = operatorValue
+    if (currentOperatorValue === '+' || currentOperatorValue === '-' || currentOperatorValue === '×' || currentOperatorValue === '/'){
+        if (secondNumberValue !== null) {
+            calculation()
         }
+        previousOperatorValue = currentOperatorValue
     }
-    if (operatorValue === '+'){
-        calculation()
-        calculatorInterfaceTwo()
-        primaryOperator = operatorValue
-        if (secondValue === null){
-            secondaryOperator = operatorValue
-        }
-    } else if (operatorValue === '-'){
-        calculation()
-        calculatorInterfaceTwo()
-        primaryOperator = operatorValue
-        if (secondValue === null){
-            secondaryOperator = operatorValue
-        }
-    } else if (operatorValue === '×'){
-        calculation()
-        calculatorInterfaceTwo()
-        primaryOperator = operatorValue
-        if (secondValue === null){
-            secondaryOperator = operatorValue
-        }
-    } else if (operatorValue === '/'){
-        calculation()
-        calculatorInterfaceTwo()
-        primaryOperator = operatorValue
-        if (secondValue === null){
-            secondaryOperator = operatorValue
-        }
-    }
-}
-
-function calculatorInterfaceTwo() {
-    if (secondValue !== null){
-        displayTwo.innerText = ''
-        displayOne.innerText = firstValue
-    }
+    secondNumberValue = null
 }
 
 
@@ -113,45 +65,44 @@ function calculatorInterfaceTwo() {
 // when the user presses a number button
 function numberBtnPressed(event) {
     let numberVal = event.target.value;
-    if(firstValue === null){
+    if(firstNumberValue === null){
         displayTwo.innerText += numberVal;
-        numberValue += numberVal;
+        currentNumberValue += numberVal;
     } else {
         displayTwo.innerText += numberVal;
-        numberValue += numberVal;
-        secondValue = parseFloat(numberValue)
+        currentNumberValue += numberVal;
+        secondNumberValue = parseFloat(currentNumberValue)
     }
 }
 
 // when the user presses a operator button
 function operatorBtnPressed(event) {
-    operatorValue = event.target.value;
-    if (operatorValue === '+' || operatorValue === '-' || operatorValue === '×' || operatorValue === '/') {
-        if (secondaryOperator === '') {
+    currentOperatorValue = event.target.value;
+    if (currentOperatorValue === '+' || currentOperatorValue === '-' || currentOperatorValue === '×' || currentOperatorValue === '/') {
+        if (firstNumberValue === null) {
             displayTwo.innerText = ''
-            displayOne.innerText = numberValue
+            displayOne.innerText = currentNumberValue
         }
     }
-    if (secondaryOperator === '') {
-        firstValue = parseFloat(numberValue)
+    if (firstNumberValue === null) {
+        firstNumberValue = parseFloat(currentNumberValue)
     }
     calculatorInterfaceOne()
-    numberValue = '';
+    currentNumberValue = '';
 }
 
 // when the use presss equal. You must show the result
 function equalBtnPressed() {
     calculatorInterfaceOne()
-    primaryOperator = ''
+    previousOperatorValue = ''
 }
 
 function clearBtnPressed(){
-    firstValue = null
-    secondValue = null
-    numberValue = '';
-    operatorValue = '';
-    primaryOperator = '';
-    secondaryOperator = '';
+    firstNumberValue = null
+    secondNumberValue = null
+    currentNumberValue = '';
+    currentOperatorValue = '';
+    previousOperatorValue = '';
     displayOne.innerText = '';
     displayTwo.innerText = '';
 }
