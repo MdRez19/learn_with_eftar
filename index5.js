@@ -97,6 +97,7 @@ function equalBtnPressed() {
     previousOperatorValue = ''
 }
 
+// clear values of all the variables...
 function clearBtnPressed(){
     firstNumberValue = null
     secondNumberValue = null
